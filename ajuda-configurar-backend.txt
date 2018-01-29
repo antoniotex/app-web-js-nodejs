@@ -1,0 +1,54 @@
+-------Iniciando um servidor Simples, com Node.js
+O Servidor foi inicado de acordo com a aba 'ABOUT' no site do node.js, criando assim o arquivo index.js -
+
+
+
+-------Instalação RESTIFY
+Na aula seguinte substituimos a configuração do servidor pelo restify, pegando o código-base direto no repositorio do restify no github. Instalei o package.json (npm init). Dando enter fica tudo padrão. Volto ao terminal e instalo o modulo restify (npm install restify --save). Inicio o servidor com o nodemon e digito localhost:8080/echo/qualquernome. Vai retornar um JSON. Pra possibilitar o retorno de erros no restify, foi instalado o "restify errors" (npm install restify-errors). O --save salva nas dependencias.
+
+
+-------Instalado KNEX e MYSQL
+Feito a instalação do KNEX para garantir que o servidor possa acessar o MYSQL. Devo instalar um ORM chamado KNEX. Para usar o KNEX é necessário instalar o pacote KNEX (npm install knex --save) e o pacote MYSQL (npm install mysql). Na documentação do KNEX (knexjs.org) tem a instrução para iniciar uma biblioteca, que precisaremos iniciar. Colar esse código logo apos a iniciação do servidor. Muda de var para const pq é uma boa prática javascript. Devo definir o nome do user, password e DB.
+
+
+-------Alimentando Banco de Dados
+Para o teste foi criado o bando 'db' com a tabela 'teste' com 2 campos apenas: id e nome.
+create database 'db';
+use 'db';
+create table 'rest' (
+	'id' int(11) not null auto_increment primary key,
+	'name' varchar(30) not null
+) engine=InnoDB default charset=utf8mb4;
+
+insert into 'rest' values(1, 'Ricardo Teixeira');
+insert into 'rest' values(2, 'Maria Joaquina');
+
+
+-------Operação de consulta com POSTMAN
+Desenvolvendo a rota para consulta de dados do servidor REST. Tenho que baixar o POSTMAN ou só usar como extensão do Chrome(que vai ser o caso). O postman permite acesso as rotas de um servidor e ver os resultados que ela trás pra mim, isso sem ter o front end desenvolvido. Pra fazer chamada com KNEX: 
+knex('knex').then((dados){
+	res.send(dados)
+}, next);
+
+
+-------Inserindo Dados na Aplicação
+Agora será desenvolvido a rota para realizar cadastros. Criei um acesso pelo método post, acessando '/create'. A diferença de um select para um insert é que devemos falar pro servidor que queremos fazer um insert ao invés do select, colocando .insert(req) dentro da rota, na primeira linha. Devo ir no POSTMAN mudar de GET para POST, mudar  endereço para final /create. Na aba header escolher content-type e application/JSON. Na aba body marcar 'application/x-www-form-urlencoded' e colocar o campo que vc quer preencher no BD e o valor. Clica em SEND e será criado um novo registro no BD.
+
+
+-------Consultando dados po ID
+irei especificar qual dado quero trazer. modifico a rota para /show/:d. O :  serve para especificar que ali vai entrar o parametro a ser pesquisado. o .where() serve para consultas especificas, igual no BD. O first é pra retornar só o primeiro dado encontrado. Sempre retornar algo, nem que seja um erro.
+
+
+-------Atualizando dados da Aplicação
+Coloco o .update(req.body) no lugar do .first(). Coloco uma mensagem de confirmação no res.send('mensagem'). Troco o verbo tambem para PUT. Na aba body do postman devo passa o campo e valor a ser colocado no campo do BD
+
+
+-------
+
+
+
+
+
+
+
+

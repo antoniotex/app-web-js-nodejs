@@ -1,0 +1,8 @@
+------ Single Page Application (SPA)
+Aplicacoes web na pratica. SPA não fica recarregando página toda vez que o user mexe com ela.
+
+
+------- Criando ponto de entrada da aplicação
+
+
+-------SPA - Consulta de dados
