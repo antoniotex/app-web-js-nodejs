@@ -1,3 +1,7 @@
+05/02 seg 10:00hs
+republica do chile 330 11° torre oeste finep (luciane) eraldo ou aquino
+
+
 -------Iniciando um servidor Simples, com Node.js
 O Servidor foi inicado de acordo com a aba 'ABOUT' no site do node.js, criando assim o arquivo index.js -
 
@@ -12,7 +16,7 @@ Feito a instalação do KNEX para garantir que o servidor possa acessar o MYSQL.
 
 
 -------Alimentando Banco de Dados
-Para o teste foi criado o bando 'db' com a tabela 'teste' com 2 campos apenas: id e nome.
+Para o teste foi criado o bando 'db' com a tabela 'rest' com 2 campos apenas: id e nome.
 create database 'db';
 use 'db';
 create table 'rest' (
@@ -25,10 +29,15 @@ insert into 'rest' values(2, 'Maria Joaquina');
 
 
 -------Operação de consulta com POSTMAN
-Desenvolvendo a rota para consulta de dados do servidor REST. Tenho que baixar o POSTMAN ou só usar como extensão do Chrome(que vai ser o caso). O postman permite acesso as rotas de um servidor e ver os resultados que ela trás pra mim, isso sem ter o front end desenvolvido. Pra fazer chamada com KNEX: 
-knex('knex').then((dados){
-	res.send(dados)
-}, next);
+Desenvolvendo a rota para consulta de dados do servidor REST. Tenho que baixar o POSTMAN ou só usar como extensão do Chrome(que vai ser o caso). O postman permite acesso as rotas de um servidor e ver os resultados que ela trás pra mim, isso sem ter o front end desenvolvido. Pra fazer chamada com KNEX:
+server.get('/', function (req, res, next) {
+
+  knex('rest').then((dados)=>{
+    res.send(dados);
+  }, next);
+
+  return next();
+});
 
 
 -------Inserindo Dados na Aplicação
@@ -44,11 +53,3 @@ Coloco o .update(req.body) no lugar do .first(). Coloco uma mensagem de confirma
 
 
 -------
-
-
-
-
-
-
-
-
