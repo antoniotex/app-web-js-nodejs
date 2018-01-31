@@ -3,6 +3,10 @@ Aplicacoes web na pratica. SPA não fica recarregando página toda vez que o use
 
 
 ------- Criando ponto de entrada da aplicação
-
+Criei uma nova pasta chamada div, crio o index.html, que será a entrada padrão(rota padrão). A rota de consulta vira /read e a padrão vira:
+server.get('/', restify.plugins.serveStatic({
+  directory: './dist',
+  file: 'index.html'
+}));
 
 -------SPA - Consulta de dados
