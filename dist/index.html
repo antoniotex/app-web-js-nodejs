@@ -29,6 +29,15 @@
         botao.addEventListener('click', create)
         read();
       }
+
+      function templateLi(id, nome){
+        return `
+          <li>${nome}</li>
+        `
+      }
+
+
+      //READ
       function read(){
         lista.innerHTML = '';
         //Chamada AJAX lib
@@ -36,30 +45,39 @@
         .then((response) => {
           console.log(response);
           response.data.forEach(element => {
-            lista.innerHTML += `<li>${element.nome}</li>`
+            lista.innerHTML += templateLi(element.id, element.nome);
           });
         })
         .catch((error) => {
           console.log(error);
         });
       }
+
+      //CREATE
       function create(){
         const nome = texto.value;
         axios.post('/create', {nome})
         .then(function (response) {
           console.log(response);
+          lista.innerHTML += templateLi(response.data[0], nome);
         })
         .catch(function (error) {
           console.log(error);
         });
 
       }
+
+      //EDIT
       function edit(){
 
       }
+
+      //UPDATE
       function update(){
 
       }
+
+      //DELETE
       function del(){
 
       }
