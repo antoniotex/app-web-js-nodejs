@@ -15,7 +15,6 @@
       Enviar
       <i class="fa fa-check" aria-hidden="true"></i>
       <i class="fa fa-wrench" aria-hidden="true"></i>
-      <i class="fa fa-trash" aria-hidden="true"></i>
     </button>
     <ul id="lista"></ul>
 
@@ -27,13 +26,16 @@
         const texto = document.querySelector('#texto');
 
         botao.addEventListener('click', create)
+        lista.addEventListener('click', del)
         read();
       }
 
       function templateLi(id, nome){
         return `
-          <li>${nome}</li>
-        `
+          <li>${nome}
+          <button ><i class="fa fa-trash delete" style="float:right;" data-id="${id}";></i></button>
+          </li>
+        `;
       }
 
 
@@ -78,8 +80,21 @@
       }
 
       //DELETE
-      function del(){
+      function del(element){
+        console.log(element);
+        if(element.target.classList.contains('delete')){
+          const id = element.target.dataset.id;
 
+          axios.delete('/delete/${id}')
+            .then((response) => {
+              if(response.status = 200){
+                lista.removeChild(element.path[2]);
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
       }
     </script>
   </body>

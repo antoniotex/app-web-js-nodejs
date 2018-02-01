@@ -78,7 +78,7 @@ server.put('/update/:id', (req, res, next) => {
 });
 
 server.del('/delete/:id', (req, res, next) => {
-
+    
     const { id } = req.params;
 
     knex('rest')
@@ -88,5 +88,5 @@ server.del('/delete/:id', (req, res, next) => {
             if(!dados) return res.send(new errs.BadRequestError('nada foi encontrado'))
             res.send('dados excluidos');
         }, next)
-
+        
 });
