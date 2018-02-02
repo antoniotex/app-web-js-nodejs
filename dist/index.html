@@ -5,18 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie-edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Document</title>
   </head>
   <body>
     <h1>Cadastro de Nomes</h1>
-    <input type="text" id="texto" name="" value="">
-    <button type="button" id="botao" name="button">
-      Enviar
-      <i class="fa fa-check" aria-hidden="true"></i>
-      <i class="fa fa-wrench" aria-hidden="true"></i>
-    </button>
-    <ul id="lista"></ul>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <input type="text" id="texto" class="form-control">
+          <button id="botao" class="btn btn-primary">
+            Enviar
+            <i class="fa fa-check" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <h1 style="margin-top:50px;">Lista de Nomes</h1>
+    <div class="row">
+      <div class="col-md-6">
+          <ul id="lista" class="list-group"></ul>
+      </div>
+    </div>
+
 
 
     <script>
@@ -27,13 +39,15 @@
 
         botao.addEventListener('click', create)
         lista.addEventListener('click', del)
+        lista.addEventListener('click', edit)
         read();
       }
 
       function templateLi(id, nome){
         return `
-          <li>${nome}
-          <button ><i class="fa fa-trash delete" style="float:right;" data-id="${id}";></i></button>
+          <li class="list-group-item">${nome}
+          <i class="btn btn-danger fa fa-trash delete" style="float:right;" data-id="${id}";></i>
+          <i class="btn btn-primary fa fa-wrench update" style="float:right;" data-id="${id}";></i>
           </li>
         `;
       }
@@ -70,8 +84,17 @@
       }
 
       //EDIT
-      function edit(){
+      function edit(element){
+        if(element.target.classList.contains('update')){
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.setAttribute('value', '');
+          const pai = element.target.parentElement;
+          const id = element.target.dataset.id;
 
+          pai.innerHTML = '';
+          pai.appendChild(input);
+        }
       }
 
       //UPDATE
@@ -85,10 +108,10 @@
         if(element.target.classList.contains('delete')){
           const id = element.target.dataset.id;
 
-          axios.delete('/delete/${id}')
+          axios.delete(`/delete/${id}`)
             .then((response) => {
               if(response.status = 200){
-                lista.removeChild(element.path[2]);
+                lista.removeChild(element.path[1]);
               }
             })
             .catch((error) => {
