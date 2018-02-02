@@ -43,12 +43,13 @@
         read();
       }
 
-      function templateLi(id, nome){
+      function templateLi(id, nome, element = true){
         return `
-          <li class="list-group-item">${nome}
-          <i class="btn btn-danger fa fa-trash delete" style="float:right;" data-id="${id}";></i>
-          <i class="btn btn-primary fa fa-wrench update" style="float:right;" data-id="${id}";></i>
-          </li>
+          ${element ? `<li class="list-group-item">` : ''}
+            ${nome}
+            <i class="btn btn-danger fa fa-trash delete" style="float:right;" data-id="${id}";></i>
+            <i class="btn btn-warning fa fa-wrench update" style="float:right;" data-id="${id}";></i>
+            ${element ? `</li>` : ''}
         `;
       }
 
@@ -94,12 +95,25 @@
 
           pai.innerHTML = '';
           pai.appendChild(input);
+          input.addEventListener('keydown', update.bind(pai, id, input));
+          input.focus()
         }
       }
 
       //UPDATE
-      function update(){
+      function update(id, input){
+        const x = event.key;
+        if(x == null || x !='Enter') return;
 
+        axios.put(`/update/${id}`, {nome: input.value})
+        .then((response) => {
+          if(response.status = 200){
+            this.innerHTML = templateLi(id, input.value, false);
+          }
+        })
+        .catch(function(error){
+          console.log(error);
+        });
       }
 
       //DELETE
